@@ -9,10 +9,10 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api")
-public class UserController {
-    private UserService userService;
+public class UserApiController {
+    private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserApiController(UserService userService) {
         this.userService = userService;
     }
 

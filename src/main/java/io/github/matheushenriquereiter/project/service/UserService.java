@@ -2,7 +2,7 @@ package io.github.matheushenriquereiter.project.service;
 
 import io.github.matheushenriquereiter.project.dto.UserDTO;
 import io.github.matheushenriquereiter.project.model.User;
-import io.github.matheushenriquereiter.project.repo.UserRepo;
+import io.github.matheushenriquereiter.project.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @Service
 @Transactional
 public class UserService {
-    private UserRepo userRepository;
+    private final UserRepository userRepository;
 
-    public UserService(UserRepo userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
