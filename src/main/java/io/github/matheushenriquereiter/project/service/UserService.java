@@ -23,6 +23,10 @@ public class UserService {
         return userList.stream().map(this::convertToDTO).toList();
     }
 
+    public UserDTO getFirstUser() {
+        return convertToDTO(userRepository.getFirstById(1L));
+    }
+
     public UserDTO saveUser(UserDTO userDTO) {
         if (userDTO == null) {
             throw new IllegalArgumentException("UserDTO is null");

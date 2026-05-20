@@ -21,4 +21,16 @@ public class UserWebController {
 
         return "userList";
     }
+
+    @GetMapping("/showUser")
+    public String showUser(Model model) {
+        model.addAttribute("user", userService.getFirstUser());
+
+        return "showUser";
+    }
+
+    @GetMapping("/createUser")
+    public String createUser(Model model) {
+        return "createUser";
+    }
 }
