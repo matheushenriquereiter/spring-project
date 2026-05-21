@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+</head>
+<body>
+
+<h1>Create User</h1>
+<form role="form" method="POST" th:action="@{/web/register/save}" th:object="${userForm}">
+    <label for="username">Username:
+        <input type="text" id="username" name="username" required th:field="*{name}">
+    </label>
+
+    <label for="email">Username:
+        <input type="text" id="email" name="username" required th:field="*{email}">
+    </label>
+
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

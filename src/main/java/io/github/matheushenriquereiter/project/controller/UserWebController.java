@@ -1,9 +1,12 @@
 package io.github.matheushenriquereiter.project.controller;
 
+import io.github.matheushenriquereiter.project.model.UserForm;
 import io.github.matheushenriquereiter.project.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -19,18 +22,28 @@ public class UserWebController {
     public String listUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
 
-        return "userList";
+        return "user-list";
     }
 
     @GetMapping("/showUser")
     public String showUser(Model model) {
         model.addAttribute("user", userService.getFirstUser());
 
-        return "showUser";
+        return "show-user";
     }
 
-    @GetMapping("/createUser")
-    public String createUser(Model model) {
-        return "createUser";
+    @GetMapping("/register")
+    public String Register(Model model) {
+        UserForm userForm = new UserForm();
+        model.addAttribute("userForm", userForm);
+
+        return "register";
+    }
+
+    @PostMapping("/register/save")
+    public String createUser(Model model, @ModelAttribute() UserForm userForm) {
+        model.addAttribute("userForm", userForm);
+
+        return "register-success";
     }
 }
