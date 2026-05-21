@@ -4,8 +4,10 @@ import io.github.matheushenriquereiter.project.dto.UserDTO;
 import io.github.matheushenriquereiter.project.model.User;
 import io.github.matheushenriquereiter.project.model.UserForm;
 import io.github.matheushenriquereiter.project.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,9 +44,13 @@ public class UserWebController {
         return "register";
     }
 
-    @PostMapping("/register/save")
-    public String createUser(Model model, @ModelAttribute() UserForm userForm) {
+    @PostMapping("/register")
+    public String createUser(@Valid @ModelAttribute() UserForm userForm, BindingResult result, Model model) {
         model.addAttribute("userForm", userForm);
+
+        if (result.hasErrors()) {
+            return "register";
+        }
 
         UserDTO userDTO = new UserDTO(userForm.getName(), userForm.getEmail());
         userService.saveUser(userDTO);

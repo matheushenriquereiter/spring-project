@@ -3,6 +3,7 @@ package io.github.matheushenriquereiter.project.controller;
 import io.github.matheushenriquereiter.project.dto.UserDTO;
 import io.github.matheushenriquereiter.project.model.UserForm;
 import io.github.matheushenriquereiter.project.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class UserApiController {
     }
 
     @PostMapping("/createUser")
-    public UserDTO createUser(@RequestBody UserDTO userDTO) {
+    public UserDTO createUser(@Valid @RequestBody UserDTO userDTO) {
         return userService.saveUser(userDTO);
     }
 
