@@ -50,9 +50,16 @@ public class UserWebController {
             return "register";
         }
 
-        UserDTO userDTO = new UserDTO(userForm.getName(), userForm.getEmail());
+        UserDTO userDTO = new UserDTO(userForm.getName(), userForm.getEmail(), userForm.getPassword());
         userService.saveUser(userDTO);
 
         return "register-success";
+    }
+
+    @PostMapping("/auth/login")
+    public String login(@Valid @ModelAttribute UserForm userForm, BindingResult result, Model model) {
+        model.addAttribute("userForm", userForm);
+
+        return "login-form";
     }
 }

@@ -16,7 +16,12 @@
     <br>
 
     <label for="email">Email:
-        <input type="text" id="email" name="username" required th:field="*{email}">
+        <input type="text" id="email" name="email" required th:field="*{email}">
+    </label>
+    <p class="erro-msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+
+    <label for="password">Email:
+        <input type="text" id="password" name="password" required th:field="*{email}">
     </label>
     <p class="erro-msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
 

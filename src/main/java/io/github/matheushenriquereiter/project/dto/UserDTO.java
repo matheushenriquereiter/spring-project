@@ -21,8 +21,11 @@ public class UserDTO {
     @Email(message = "Digite um e-mail válido.")
     private String email;
 
-    public UserDTO(String name, String email) {
+    private String password;
+
+    public UserDTO(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 }

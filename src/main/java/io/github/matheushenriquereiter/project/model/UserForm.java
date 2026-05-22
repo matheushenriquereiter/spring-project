@@ -19,11 +19,17 @@ public class UserForm {
     @Email(message = "Digite um e-mail válido.")
     private String email;
 
+    private String password;
+
     public void setName(String name) {
         this.name = name.trim();
     }
 
     public void setEmail(String email) {
         this.email = email.trim();
+    }
+
+    public void setPassword(String password) {
+        this.password = password.trim();
     }
 }

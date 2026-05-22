@@ -4,17 +4,21 @@ import io.github.matheushenriquereiter.project.dto.UserDTO;
 import io.github.matheushenriquereiter.project.model.User;
 import io.github.matheushenriquereiter.project.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserDTO> getAllUsers() {
@@ -33,6 +37,9 @@ public class UserService {
         }
 
         User user = convertToEntity(userDTO);
+        String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+        user.setPassword(encodedPassword);
+
         User savedUser = userRepository.save(user);
 
         return convertToDTO(savedUser);
@@ -63,6 +70,7 @@ public class UserService {
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
+        dto.setPassword(user.getPassword());
 
         return dto;
     }
@@ -72,6 +80,26 @@ public class UserService {
             return null;
         }
 
-        return new User(dto.getId(), dto.getName(), dto.getEmail());
+        return new User(dto.getId(), dto.getName(), dto.getEmail(), dto.getPassword());
+    }
+
+    /**
+     * MÉTODOS DE AUTENTICAÇÃO DE VERDADE AQUI:
+     */
+    public boolean validarCredenciais(String email, String rawPassword) {
+        // 1. Busca o usuário no banco de dados (MySQL) pelo e-mail
+        Optional<User> userOptional = userRepository.findByEmail(email);
+
+        // 2. Se não encontrou o usuário, retorna false (Login inválido)
+        if (userOptional.isEmpty()) {
+            return false;
+        }
+
+        User user = userOptional.get();
+
+        // 3. Compara a senha em texto puro com o Hash criptografado do banco
+        // O método "matches" faz a matemática do BCrypt para ver se elas batem.
+        // NUNCA faça: rawPassword.equals(user.getPassword())
+        return passwordEncoder.matches(rawPassword, user.getPassword());
     }
 }
