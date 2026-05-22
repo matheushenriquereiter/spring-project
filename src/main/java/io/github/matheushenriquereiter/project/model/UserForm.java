@@ -18,4 +18,12 @@ public class UserForm {
     @NotBlank(message = "O e-mail é obrigatório.")
     @Email(message = "Digite um e-mail válido.")
     private String email;
+
+    public void setName(String name) {
+        this.name = name.trim();
+    }
+
+    public void setEmail(String email) {
+        this.email = email.trim();
+    }
 }

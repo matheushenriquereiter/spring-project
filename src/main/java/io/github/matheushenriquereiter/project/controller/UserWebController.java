@@ -37,7 +37,7 @@ public class UserWebController {
     }
 
     @GetMapping("/register")
-    public String Register(Model model) {
+    public String showRegistrationForm(Model model) {
         UserForm userForm = new UserForm();
         model.addAttribute("userForm", userForm);
 
@@ -45,9 +45,7 @@ public class UserWebController {
     }
 
     @PostMapping("/register")
-    public String createUser(@Valid @ModelAttribute() UserForm userForm, BindingResult result, Model model) {
-        model.addAttribute("userForm", userForm);
-
+    public String processRegistration(@Valid @ModelAttribute UserForm userForm, BindingResult result) {
         if (result.hasErrors()) {
             return "register";
         }
