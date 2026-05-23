@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+</head>
+<body>
+
+<h1>Create User</h1>
+
+<form role="form" method="POST" th:action="@{/web/auth/login}" th:object="${userLogin}">
+    <label for="email">Email:
+        <input type="text" id="email" name="email" required th:field="*{email}">
+    </label>
+
+    <br>
+
+    <label for="password">Password:
+        <input type="text" id="password" name="password" required th:field="*{password}">
+    </label>
+
+    <br>
+
+    <button type="submit">Submit</button>
+    <span th:text="${erro}"></span>
+</form>
+
+</body>
+</html>

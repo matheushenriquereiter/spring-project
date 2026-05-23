@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
     private final UserService userService;
@@ -22,19 +22,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> fazerLogin(@RequestBody UserDTO userDTO) {
-
+    public ResponseEntity<?> login(@RequestBody UserDTO userDTO) {
         // 1. Validamos as credenciais no banco de dados (usando o BCrypt)
-        boolean credenciaisValidas = userService.validarCredenciais(
-                userDTO.getEmail(),
-                userDTO.getPassword()
-        );
+        boolean credenciaisValidas = userService.validarCredenciais(userDTO.getEmail(), userDTO.getPassword());
 
         // 2. Se a senha ou e-mail estiverem errados, barramos aqui
         if (!credenciaisValidas) {
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body("E-mail ou senha incorretos.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("E-mail ou senha incorretos.");
         }
 
         // 3. Se passou, o usuário é legítimo! Geramos o Token JWT usando o e-mail dele
