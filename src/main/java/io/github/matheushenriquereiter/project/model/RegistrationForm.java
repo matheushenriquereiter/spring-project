@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserForm {
+public class RegistrationForm {
     @NotBlank(message = "O nome não pode estar vazio.")
     @Size(min = 3, max = 50, message = "O nome deve ter entre 3 e 50 caracteres.")
     private String name;
@@ -19,6 +19,8 @@ public class UserForm {
     @Email(message = "Digite um e-mail válido.")
     private String email;
 
+    @NotBlank(message = "A senha não pode estar vazia.")
+    @Size(min = 3, max = 50, message = "A senha deve ter entre 3 e 50 caracteres.")
     private String password;
 
     public void setName(String name) {

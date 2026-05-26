@@ -8,7 +8,7 @@
 
 <h1>Create User</h1>
 
-<form role="form" method="POST" th:action="@{/web/auth/login}" th:object="${userLogin}">
+<form role="form" method="POST" th:action="@{/login}" th:object="${loginForm}">
     <label for="email">Email:
         <input type="text" id="email" name="email" required th:field="*{email}">
     </label>
@@ -22,7 +22,7 @@
     <br>
 
     <button type="submit">Submit</button>
-    <span th:text="${erro}"></span>
+    <span th:text="${loginError}"></span>
 </form>
 
 </body>

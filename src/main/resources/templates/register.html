@@ -2,28 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create User</title>
+    <title>Register User</title>
 </head>
 <body>
 
-<h1>Create User</h1>
-<form role="form" method="POST" th:action="@{/web/register}" th:object="${userForm}">
-    <label for="username">Username:
-        <input type="text" id="username" name="username" required th:field="*{name}">
+<h1>Register User</h1>
+<form role="form" method="POST" th:action="@{/register}" th:object="${registrationForm}">
+
+    <label for="name">Name:
+        <input type="text" id="name" required th:field="*{name}">
     </label>
-    <p class="erro-msg" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 
     <br>
 
     <label for="email">Email:
-        <input type="text" id="email" name="email" required th:field="*{email}">
+        <input type="email" id="email" required th:field="*{email}">
     </label>
-    <p class="erro-msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
 
-    <label for="password">Email:
-        <input type="text" id="password" name="password" required th:field="*{email}">
+    <br>
+
+    <label for="password">Password:
+        <input type="password" id="password" required th:field="*{password}">
     </label>
-    <p class="erro-msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 
     <br>
 

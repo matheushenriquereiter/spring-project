@@ -9,7 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @Data
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
     @SequenceGenerator(name = "user_seq", sequenceName = "user_id_seq", allocationSize = 1)
@@ -21,7 +20,6 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    // Novo campo para a senha
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String password;
 }

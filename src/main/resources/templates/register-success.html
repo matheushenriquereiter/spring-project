@@ -1,18 +1,21 @@
+<!--/*@thymesVar id="registrationForm" type="io.github.matheushenriquereiter.project.model.RegistrationForm"*/-->
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
 >
 <head>
     <meta charset="UTF-8">
-    <title>User Registered Data</title>
+    <title>User Registered</title>
 </head>
 <body>
 
 <div>
-    <h1>Registered User Information</h1>
-    <div>
-        <p>Name: <strong th:text="${userForm.name}"></strong></p>
-        <p>Email: <strong th:text="${userForm.email}"></strong></p>
+    <h1>User Registered</h1>
+    
+    <div th:object="${registrationForm}">
+        <p>Name:<strong th:text="*{name}"></strong></p>
+        <p>Email: <strong th:text="*{email}"></strong></p>
     </div>
 </div>
 
