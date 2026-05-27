@@ -1,6 +1,7 @@
 package io.github.matheushenriquereiter.project.service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,18 @@ public class JwtService {
                 .getPayload();
 
         return payload.getSubject();
+    }
+
+    public boolean isValid(String token) {
+        try {
+            Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token);
+
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
     }
 }

@@ -88,6 +88,6 @@ public class UserController {
 
         response.addCookie(jwtCookie);
 
-        return "/list-users";
+        return "redirect:/list-users";
     }
 }
