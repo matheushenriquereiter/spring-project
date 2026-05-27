@@ -63,20 +63,20 @@ public class UserController {
         LoginForm loginForm = new LoginForm();
         model.addAttribute("loginForm", loginForm);
 
-        return "login-form";
+        return "login";
     }
 
     @PostMapping("/login")
     public String processLogin(@Valid @ModelAttribute LoginForm loginForm, BindingResult result, HttpServletResponse response, Model model) {
         if (result.hasErrors()) {
-            return "login-form";
+            return "login";
         }
 
         boolean validatedCredentials = userService.validateCredentials(loginForm.getEmail(), loginForm.getPassword());
 
         if (!validatedCredentials) {
             model.addAttribute("loginError", "E-mail ou senha incorretos.");
-            return "login-form";
+            return "login";
         }
 
         String token = jwtService.generateToken(loginForm.getEmail());
