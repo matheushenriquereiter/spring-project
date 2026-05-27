@@ -3,6 +3,7 @@ package io.github.matheushenriquereiter.project.controller;
 import io.github.matheushenriquereiter.project.dto.UserDTO;
 import io.github.matheushenriquereiter.project.model.LoginForm;
 import io.github.matheushenriquereiter.project.model.RegistrationForm;
+import io.github.matheushenriquereiter.project.model.User;
 import io.github.matheushenriquereiter.project.service.JwtService;
 import io.github.matheushenriquereiter.project.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
 
 @Controller
 public class UserController {
@@ -29,6 +32,15 @@ public class UserController {
         model.addAttribute("users", userService.getUsers());
 
         return "list-users";
+    }
+
+    @GetMapping("/show-user")
+    public String showUser(Model model, Principal principal) {
+        String loggedUserEmail = principal.getName();
+        UserDTO loggedUser = userService.getByEmail(loggedUserEmail);
+        model.addAttribute("loggedUser", loggedUser);
+
+        return "show-user";
     }
 
     @GetMapping("/register")
@@ -75,7 +87,7 @@ public class UserController {
         boolean validatedCredentials = userService.validateCredentials(loginForm.getEmail(), loginForm.getPassword());
 
         if (!validatedCredentials) {
-            model.addAttribute("loginError", "E-mail ou senha incorretos.");
+            model.addAttribute("loginError", "Incorrect email address or password.");
             return "login";
         }
 
@@ -88,6 +100,6 @@ public class UserController {
 
         response.addCookie(jwtCookie);
 
-        return "redirect:/list-users";
+        return "redirect:/show-user";
     }
 }

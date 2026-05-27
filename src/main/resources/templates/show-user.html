@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+
+<div th:object="${loggedUser}">
+    <h1 th:text="*{name}"></h1>
+    <p th:text="*{email}"></p>
+    <p th:text="*{password}"></p>
+</div>
+
+</body>
+</html>

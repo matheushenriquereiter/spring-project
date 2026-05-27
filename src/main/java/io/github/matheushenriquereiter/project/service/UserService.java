@@ -27,6 +27,10 @@ public class UserService {
         return userList.stream().map(this::convertToDTO).toList();
     }
 
+    public UserDTO getByEmail(String email) {
+        return userRepository.findByEmail(email).map(this::convertToDTO).orElse(null);
+    }
+
     public void saveUser(UserDTO userDTO) {
         if (userDTO == null) {
             throw new IllegalArgumentException("UserDTO is null");
