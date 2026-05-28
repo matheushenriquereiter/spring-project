@@ -1,0 +1,23 @@
+<!--/*@thymesVar id="articleForm" type="io.github.matheushenriquereiter.project.model.ArticleForm"*/-->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Add Article Success</title>
+</head>
+<body>
+
+<div>
+    <h1>Add Article Success</h1>
+
+    <div th:object="${articleForm}">
+        <p>Name:<strong th:text="*{title}"></strong></p>
+        <p>Email: <strong th:text="*{resume}"></strong></p>
+    </div>
+</div>
+
+</body>
+</html>

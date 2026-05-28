@@ -3,7 +3,6 @@ package io.github.matheushenriquereiter.project.controller;
 import io.github.matheushenriquereiter.project.dto.UserDTO;
 import io.github.matheushenriquereiter.project.model.LoginForm;
 import io.github.matheushenriquereiter.project.model.RegistrationForm;
-import io.github.matheushenriquereiter.project.model.User;
 import io.github.matheushenriquereiter.project.service.JwtService;
 import io.github.matheushenriquereiter.project.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -37,7 +36,7 @@ public class UserController {
     @GetMapping("/show-user")
     public String showUser(Model model, Principal principal) {
         String loggedUserEmail = principal.getName();
-        UserDTO loggedUser = userService.getByEmail(loggedUserEmail);
+        UserDTO loggedUser = userService.getByEmail(loggedUserEmail).toDTO();
         model.addAttribute("loggedUser", loggedUser);
 
         return "show-user";
@@ -58,7 +57,7 @@ public class UserController {
         }
 
         UserDTO userDTO = new UserDTO(registrationForm.getName(), registrationForm.getEmail(), registrationForm.getPassword());
-        userService.saveUser(userDTO);
+        userService.save(userDTO.toEntity());
 
         redirectAttributes.addFlashAttribute("registrationForm", registrationForm);
 
@@ -100,6 +99,11 @@ public class UserController {
 
         response.addCookie(jwtCookie);
 
-        return "redirect:/show-user";
+        return "redirect:/home";
+    }
+
+    @GetMapping("/home")
+    public String home() {
+        return "home";
     }
 }

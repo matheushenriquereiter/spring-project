@@ -24,45 +24,22 @@ public class UserService {
     public List<UserDTO> getUsers() {
         List<User> userList = userRepository.findAll();
 
-        return userList.stream().map(this::convertToDTO).toList();
+        return userList.stream().map(User::toDTO).toList();
     }
 
-    public UserDTO getByEmail(String email) {
-        return userRepository.findByEmail(email).map(this::convertToDTO).orElse(null);
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 
-    public void saveUser(UserDTO userDTO) {
-        if (userDTO == null) {
+    public void save(User user) {
+        if (user == null) {
             throw new IllegalArgumentException("UserDTO is null");
         }
 
-        User user = convertToEntity(userDTO);
-        String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
-    }
-
-    private UserDTO convertToDTO(User user) {
-        if (user == null) {
-            return null;
-        }
-
-        UserDTO dto = new UserDTO();
-        dto.setId(user.getId());
-        dto.setName(user.getName());
-        dto.setEmail(user.getEmail());
-        dto.setPassword(user.getPassword());
-
-        return dto;
-    }
-
-    private User convertToEntity(UserDTO dto) {
-        if (dto == null) {
-            return null;
-        }
-
-        return new User(dto.getId(), dto.getName(), dto.getEmail(), dto.getPassword());
     }
 
     public boolean validateCredentials(String email, String rawPassword) {

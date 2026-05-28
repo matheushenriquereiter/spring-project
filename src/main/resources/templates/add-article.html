@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Article</title>
+</head>
+<body>
+
+<h1>Add Article</h1>
+<form role="form" method="POST" th:action="@{/add-article}" th:object="${articleForm}">
+    <label for="title">Title:
+        <input type="text" id="title" required th:field="*{title}">
+    </label>
+    <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+
+    <label for="resume">Resume:
+        <input type="text" id="resume" required th:field="*{resume}">
+    </label>
+    <p th:if="${#fields.hasErrors('resume')}" th:errors="*{resume}"></p>
+
+    <br>
+
+    <button type="submit">Add</button>
+</form>
+
+</body>
+</html>

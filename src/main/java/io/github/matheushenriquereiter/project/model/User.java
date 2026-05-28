@@ -1,13 +1,18 @@
 package io.github.matheushenriquereiter.project.model;
 
+import io.github.matheushenriquereiter.project.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
@@ -22,4 +27,26 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @ManyToMany
+    @JoinTable(name = "user_article",
+            joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
+    private Set<Article> articles = new HashSet<>();
+
+    public User(Long id, String name, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public UserDTO toDTO() {
+        UserDTO dto = new UserDTO();
+        dto.setId(this.getId());
+        dto.setName(this.getName());
+        dto.setEmail(this.getEmail());
+        dto.setPassword(this.getPassword());
+
+        return dto;
+    }
 }

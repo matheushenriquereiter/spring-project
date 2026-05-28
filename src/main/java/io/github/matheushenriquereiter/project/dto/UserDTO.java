@@ -1,5 +1,6 @@
 package io.github.matheushenriquereiter.project.dto;
 
+import io.github.matheushenriquereiter.project.model.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -28,5 +29,9 @@ public class UserDTO {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public User toEntity() {
+        return new User(this.getId(), this.getName(), this.getEmail(), this.getPassword());
     }
 }
